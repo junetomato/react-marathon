@@ -1,0 +1,93 @@
+.root {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    margin: 0 auto;
+    background: #202736;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.root::before {
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    min-height: 100vh;
+    content: '';
+    animation: stars-move-in 1000ms 300ms forwards;
+    opacity: 0;
+    background: url( '../../assets/images/Stars.svg' );
+    background-attachment: fixed;
+}
+
+@keyframes stars-move-in {
+    from {
+        background-position-y: -100px;
+    }
+
+    to {
+        opacity: 1;
+        background-position-y: 0;
+    }
+}
+
+.forest {
+    position: absolute;
+    bottom: -300px;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    animation: forest-move-in 1000ms 500ms forwards;
+    opacity: 0;
+    border-bottom: 300px solid #181d23;
+    background: url( '../../assets/images/Trees.svg' ) bottom left repeat-x;
+    background-size: cover;
+}
+
+@keyframes forest-move-in {
+    from {
+        background-position-y: 150%;
+    }
+
+    to {
+        opacity: 1;
+        background-position-y: 100%;
+    }
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 50%;
+    width: fit-content;
+    transform: translate(-50%, -50%);
+    animation: text-fade-in 1000ms 800ms forwards;
+    opacity: 0;
+}
+
+@keyframes text-fade-in {
+    from {
+        right: 0;
+    }
+
+    to {
+        right: 25%;
+        opacity: 1;
+    }
+}
+
+.container h1 {
+    font-size: 65px;
+    font-weight: normal;
+    font-style: italic;
+    line-height: 65px;
+    color: #fafafa;
+}
+
+.container p {
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 32px;
+    color: #fafafa;
+}
