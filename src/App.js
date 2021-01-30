@@ -1,8 +1,8 @@
-import Header from './components/Header/Header'
-import Footer from './components/Footer/Footer'
-import Layout from './components/Layout/Layout'
-import bg1 from './assets/images/bg1.jpg'
-import bg3 from './assets/images/bg3.jpg'
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Layout from './components/Layout';
+import bg1 from './assets/images/bg1.jpg';
+import bg3 from './assets/images/bg3.jpg';
 
 function App() {
     return (
@@ -34,4 +34,4 @@ function App() {
     )
 }
 
-export default App
+export default App;

@@ -2,16 +2,19 @@ import classes from './Layout.module.css'
 
 function Layout({ id, title, descr, urlBg, colorBg }) {
 
-    const layoutStyle = {
-        backgroundImage: urlBg && `url( '${ urlBg }' )`,
-        backgroundColor: colorBg
+    const layoutStyle = {};
+    if( urlBg ) {
+        layoutStyle.backgroundImage = `url( '${ urlBg }' )`;
+    }
+    if( colorBg ) {
+        layoutStyle.backgroundColor = colorBg;
     }
 
     return (
         <section
-        className={ classes.root }
-        id={ id }
-        style={ layoutStyle }
+            className={ classes.root }
+            id={ id }
+            style={ layoutStyle }
         >
             <div className={ classes.wrapper }>
                 <article>
@@ -28,4 +31,4 @@ function Layout({ id, title, descr, urlBg, colorBg }) {
     )
 }
 
-export default Layout
+export default Layout;

@@ -1,4 +1,4 @@
-import classes from './Footer.module.css'
+import classes from './Footer.module.css';
 
 function Footer() {
     return (
@@ -11,4 +11,4 @@ function Footer() {
     )
 }
 
-export default Footer
+export default Footer;

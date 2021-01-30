@@ -1,4 +1,4 @@
-import classes from './Header.module.css'
+import classes from './Header.module.css';
 
 function Header({ title, descr }) {
     return (
@@ -12,4 +12,4 @@ function Header({ title, descr }) {
     )
 }
 
-export default Header
+export default Header;
