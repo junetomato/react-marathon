@@ -1,6 +1,6 @@
-import classes from './Layout.module.css'
+import classes from './style.module.css'
 
-function Layout({ id, title, descr, urlBg, colorBg }) {
+function Layout({ id, title, urlBg, colorBg, children }) {
 
     const layoutStyle = {};
     if( urlBg ) {
@@ -23,7 +23,7 @@ function Layout({ id, title, descr, urlBg, colorBg }) {
                         <span className={ classes.separator }></span>
                     </div>
                     <div className={ `${ classes.desc } ${ classes.full }` }>
-                        <p>{ descr }</p>
+                        { children }
                     </div>
                 </article>
             </div>
