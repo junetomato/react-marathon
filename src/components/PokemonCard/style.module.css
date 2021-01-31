@@ -1,0 +1,235 @@
+.root {
+    width: 268px;
+    height: 388px;
+    margin: 16px;
+    perspective: 1000px;
+}
+
+.pokemonCard {
+    position: relative;
+    width: inherit;
+    height: inherit;
+    transition: .6s .1s;
+    transform: rotateY(180deg);
+    transform-style: preserve-3d;
+
+    --fire: #fddfdf;
+    --grass: #defde0;
+    --electric: #fcf7de;
+    --water: #def3fd;
+    --ground: #f4e7da;
+    --rock: #d5d5d4;
+    --fairy: #fceaff;
+    --poison: #98d7a5;
+    --bug: #f8d5a3;
+    --dragon: #97b3e6;
+    --psychic: #eaeda1;
+    --flying: #f5f5f5;
+    --fighting: #e6e0d4;
+    --normal: #f5f5f5;
+}
+
+/* TODO: This place where we should change :hover on .active */
+.pokemonCard.active {
+    transform: rotateY(0deg);
+}
+
+.cardFront,
+.cardBack {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    backface-visibility: hidden;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    background: var(--normal);
+}
+
+.cardFront {
+    z-index: 2;
+    transform: rotateY(0deg);
+}
+
+.wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.wrap.front {
+    z-index: 2;
+    padding: 10px;
+}
+
+.wrap.front::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    transform: translate(-50%, -50%);
+    border: 12px solid #fce756;
+    border-radius: 24px;
+}
+
+.wrap.back {
+    z-index: -1;
+}
+
+.cardBack {
+    z-index: 1;
+    transform: rotateY(180deg);
+}
+
+.cardBack img {
+    height: 100%;
+    border-radius: 24px;
+}
+
+.pokemon {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border-radius: 20px;
+    background-color: #eee;
+    box-shadow: 0 3px 15px rgba(100, 100, 100, .5);
+}
+
+.fire {
+    background-color: var(--fire);
+}
+
+.grass {
+    background-color: var(--grass);
+}
+
+.electric {
+    background-color: var(--electric);
+}
+
+.water {
+    background-color: var(--water);
+}
+
+.ground {
+    background-color: var(--ground);
+}
+
+.rock {
+    background-color: var(--rock);
+}
+
+.fairy {
+    background-color: var(--fairy);
+}
+
+.poison {
+    background-color: var(--poison);
+}
+
+.bug {
+    background-color: var(--bug);
+}
+
+.dragon {
+    background-color: var(--dragon);
+}
+
+.psychic {
+    background-color: var(--psychic);
+}
+
+.flying {
+    background-color: var(--flying);
+}
+
+.fighting {
+    background-color: var(--fighting);
+}
+
+.normal {
+    background-color: var(--normal);
+}
+
+.pokemon .imgContainer {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .6);
+}
+
+.pokemon .imgContainer img {
+    max-width: 90%;
+    margin-top: 20px;
+}
+
+.pokemon .info {
+    margin-top: 20px;
+}
+
+.pokemon .number {
+    font-size: .8em;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.pokemon .name {
+    margin: 15px 0 7px;
+    letter-spacing: 1px;
+}
+
+.values {
+    font-size: 26px;
+    line-height: 26px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: block;
+    width: 78px;
+    height: 78px;
+}
+
+.count {
+    position: absolute;
+    width: 30px;
+    height: 26px;
+    text-align: center;
+}
+
+.count.top {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.count.left {
+    top: 26px;
+    left: 0;
+}
+
+.count.right {
+    top: 26px;
+    right: 0;
+}
+
+.count.bottom {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
