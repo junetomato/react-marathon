@@ -7,7 +7,7 @@ function PokemonCard({ values, type, img, name, id }) {
     const [ isActive, setActive ] = useState( false );
 
     const onShowPokemon = () => {
-        setActive( isActive ? false : true );
+        setActive( !isActive );
     }
 
     return (
