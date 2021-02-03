@@ -4,32 +4,27 @@ import cn from 'classnames';
 function Menu({ isActive }) {
 
     let activeClass = isActive ? 'active' : 'deactive';
+    let routesData  = [
+        { url: '#welcome', name: 'HOME' },
+        { url: '#game', name: 'GAME' },
+        { url: '#about', name: 'ABOUT' },
+        { url: '#contact', name: 'CONTACT' },
+    ];
 
     return (
         <div className={ cn( s.menuContainer, s[activeClass] ) }>
             <div className={ cn( s.overlay ) } />
             <div className={ cn( s.menuItems ) }>
                 <ul>
-                <li>
-                    <a href="#welcome">
-                    HOME
-                    </a>
-                </li>
-                <li>
-                    <a href="#game">
-                    GAME
-                    </a>
-                </li>
-                <li>
-                    <a href="#about">
-                    ABOUT
-                    </a>
-                </li>
-                <li>
-                    <a href="#contact">
-                    CONTACT
-                    </a>
-                </li>
+                    {
+                        routesData.map( item => (
+                            <li>
+                                <a href={ item.url }>
+                                    { item.name }
+                                </a>
+                            </li>
+                        ))
+                    }
                 </ul>
             </div>
         </div>
