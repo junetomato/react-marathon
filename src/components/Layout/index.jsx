@@ -1,4 +1,5 @@
-import classes from './style.module.css'
+import s from './style.module.css';
+import cn from 'classnames';
 
 function Layout({ id, title, urlBg, colorBg, children }) {
 
@@ -12,17 +13,17 @@ function Layout({ id, title, urlBg, colorBg, children }) {
 
     return (
         <section
-            className={ classes.root }
+            className={ cn( s.root ) }
             id={ id }
             style={ layoutStyle }
         >
-            <div className={ classes.wrapper }>
+            <div className={ cn( s.wrapper ) }>
                 <article>
-                    <div className={ classes.title }>
+                    <div className={ cn( s.title ) }>
                         <h3>{ title }</h3>
-                        <span className={ classes.separator }></span>
+                        <span className={ cn( s.separator ) }></span>
                     </div>
-                    <div className={ `${ classes.desc } ${ classes.full }` }>
+                    <div className={ cn( s.desc, s.full ) }>
                         { children }
                     </div>
                 </article>
