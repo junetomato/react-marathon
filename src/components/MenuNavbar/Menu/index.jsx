@@ -3,7 +3,6 @@ import cn from 'classnames';
 
 function Menu({ isActive }) {
 
-    let activeClass = isActive ? 'active' : 'deactive';
     let routesData  = [
         { url: '#welcome', name: 'HOME' },
         { url: '#game', name: 'GAME' },
@@ -12,7 +11,10 @@ function Menu({ isActive }) {
     ];
 
     return (
-        <div className={ cn( s.menuContainer, s[activeClass] ) }>
+        <div className={ cn( s.menuContainer, {
+            [ s.active ]: isActive === true,
+            [ s.deactive ]: isActive === false
+        } ) }>
             <div className={ cn( s.overlay ) } />
             <div className={ cn( s.menuItems ) }>
                 <ul>

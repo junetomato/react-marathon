@@ -1,7 +1,7 @@
 import s from './style.module.css';
 import cn from 'classnames';
 
-function NavBar({ isActive, onSetActive }) {
+function NavBar({ isActive, onSetActive, bgActive = false }) {
 
     const handleClick = () => {
         console.log( '###: <NavBar />' );
@@ -9,18 +9,17 @@ function NavBar({ isActive, onSetActive }) {
     }
 
     return (
-        <nav id={ s.navbar }>
+        <nav id={ s.navbar } className={ cn({ [ s.bgActive ]: bgActive }) }>
             <div className={ cn( s.navWrapper ) }>
                 <p className={ cn( s.brand ) }>
                     LOGO
                 </p>
-                <a
-                    href="#setactive"
+                <div
                     className={ cn( s.menuButton, { [s.active] : isActive } ) }
                     onClick={ handleClick }
                     >
                     <span />
-                </a>
+                </div>
             </div>
         </nav>
     )

@@ -1,3 +1,7 @@
+import MenuNavbar from '../../components/MenuNavbar';
+import cn from 'classnames';
+import s from './style.module.css'
+
 function GamePage({ onChangePage }) {
 
     const handleClick = () => {
@@ -6,7 +10,8 @@ function GamePage({ onChangePage }) {
     }
 
     return (
-        <div>
+        <div className={ cn( s.gameWrapper ) }>
+            <MenuNavbar bgActive={ true } />
             <p>This is a Game Page!!!</p>
             <button onClick={ handleClick }>
                 Go Back to Home Page
