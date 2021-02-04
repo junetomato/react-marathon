@@ -14,6 +14,7 @@ function MenuNavbar({ bgActive }) {
         <>
             <Menu
                 isActive={ isActive }
+                onSetActive={ handleSetActive }
                 />
             <NavBar
                 isActive={ isActive }

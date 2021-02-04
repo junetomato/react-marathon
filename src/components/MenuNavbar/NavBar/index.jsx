@@ -4,7 +4,6 @@ import cn from 'classnames';
 function NavBar({ isActive, onSetActive, bgActive = false }) {
 
     const handleClick = () => {
-        console.log( '###: <NavBar />' );
         onSetActive && onSetActive();
     }
 
