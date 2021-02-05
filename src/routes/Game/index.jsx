@@ -16,11 +16,10 @@ function GamePage() {
 
     const handleSetActivePokemons = ( id ) => {
         setActivePokemons( prevState =>
-            prevState.map( pOld => {
-                let p = { ...pOld };
+            prevState.map( p => {
 
                 if( p.id === id ) {
-                    p.active = !p.active;
+                    return { ...p, active: !p.active };
                 }
                 return p;
             } )
