@@ -1,27 +1,34 @@
 import s from './style.module.css';
 import cn from 'classnames';
+import { Link } from 'react-router-dom';
 
-function Menu({ isActive }) {
+function Menu({ isActive, onSetActive }) {
 
-    let activeClass = isActive ? 'active' : 'deactive';
     let routesData  = [
-        { url: '#welcome', name: 'HOME' },
-        { url: '#game', name: 'GAME' },
-        { url: '#about', name: 'ABOUT' },
-        { url: '#contact', name: 'CONTACT' },
+        { url: '/', name: 'HOME' },
+        { url: '/game', name: 'GAME' },
+        { url: '/about', name: 'ABOUT' },
+        { url: '/contact', name: 'CONTACT' },
     ];
 
+    const handleClick = () => {
+        onSetActive();
+    }
+
     return (
-        <div className={ cn( s.menuContainer, s[activeClass] ) }>
+        <div className={ cn( s.menuContainer, {
+            [ s.active ]: isActive === true,
+            [ s.deactive ]: isActive === false
+        } ) }>
             <div className={ cn( s.overlay ) } />
             <div className={ cn( s.menuItems ) }>
                 <ul>
                     {
-                        routesData.map( item => (
-                            <li>
-                                <a href={ item.url }>
-                                    { item.name }
-                                </a>
+                        routesData.map( ( { url, name }, index ) => (
+                            <li key={ index }>
+                                <Link to={ url } onClick={ handleClick }>
+                                    { name }
+                                </Link>
                             </li>
                         ))
                     }

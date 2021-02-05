@@ -2,23 +2,24 @@ import Menu from './Menu'
 import NavBar from './NavBar'
 import { useState } from 'react'
 
-function MenuNavbar() {
+function MenuNavbar({ bgActive }) {
 
-    const [ isActive, setActive ] = useState( false );
+    const [ isActive, setActive ] = useState( null );
 
     const handleSetActive = () => {
-        console.log( '###: <MenuNavbar />' );
-        setActive( !isActive );
+        setActive( prevState => !prevState );
     }
 
     return (
         <>
             <Menu
                 isActive={ isActive }
+                onSetActive={ handleSetActive }
                 />
             <NavBar
                 isActive={ isActive }
                 onSetActive={ handleSetActive }
+                bgActive={ bgActive }
                 />
         </>
     )
