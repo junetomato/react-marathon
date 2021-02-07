@@ -11,7 +11,7 @@ function GamePage() {
     const [ pokemons, setPokemons ] = useState({});
 
     useEffect( () => {
-        database.ref( 'pokemons' ).once( 'value', ( snapshot ) => {
+        database.ref( 'pokemons' ).on( 'value', ( snapshot ) => {
             setPokemons( snapshot.val() );
         })
     }, [] );
@@ -66,12 +66,12 @@ function GamePage() {
         const newKey = database.ref().child( 'pokemons' ).push().key;
         database.ref( 'pokemons/' + newKey ).set({ ...newPokemonData });
 
-        setPokemons( prevState => {
-            return {
-                ...prevState,
-                [ newKey ]: { ...newPokemonData }
-            }
-        })
+        // setPokemons( prevState => {
+        //     return {
+        //         ...prevState,
+        //         [ newKey ]: { ...newPokemonData }
+        //     }
+        // })
     }
 
     return (
