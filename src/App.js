@@ -5,10 +5,10 @@ import MenuNavbar from './components/MenuNavbar';
 import Footer from './components/Footer';
 import cn from 'classnames';
 import s from './style.module.css';
-import AboutPage from './routes/About'
-import ContactPage from './routes/Contact'
-import NotFound from './routes/NotFound'
-import './App.css'
+import AboutPage from './routes/About';
+import ContactPage from './routes/Contact';
+import NotFound from './routes/NotFound';
+import './App.css';
 
 function App() {
 
