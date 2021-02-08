@@ -21,21 +21,17 @@ function GamePage() {
     }
 
     const handleSetActivePokemons = ( id ) => {
-        setPokemons( prevState => {
-            return Object.entries( prevState ).reduce( ( acc, item ) => {
-                const pokemon = { ...item[1] };
-                const objID   = item[0];
+        Object.entries( pokemons ).reduce( ( acc, item ) => {
+            const pokemon = { ...item[1] };
+            const objID   = item[0];
 
-                if( pokemon.id === id ) {
-                    pokemon.active = pokemon.active ? false : true;
-                    database.ref( 'pokemons/'+ objID ).set({ ...pokemon });
-                }
+            if( pokemon.id === id ) {
+                pokemon.active = pokemon.active ? false : true;
+                database.ref( 'pokemons/'+ objID ).set({ ...pokemon });
+            }
 
-                acc[ item[0] ] = pokemon;
-
-                return acc;
-            }, {} );
-        });
+            return acc;
+        }, {} );
     }
 
     const handleAddNewPokemon = ( newPokemonData ) => {
@@ -65,13 +61,6 @@ function GamePage() {
 
         const newKey = database.ref().child( 'pokemons' ).push().key;
         database.ref( 'pokemons/' + newKey ).set({ ...newPokemonData });
-
-        // setPokemons( prevState => {
-        //     return {
-        //         ...prevState,
-        //         [ newKey ]: { ...newPokemonData }
-        //     }
-        // })
     }
 
     return (
