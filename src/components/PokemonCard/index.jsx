@@ -1,10 +1,19 @@
 import cn from 'classnames';
 import s from './style.module.css';
 
-function PokemonCard({ values, type, img, name, id, isActive, minimize, className, isSelected, setSelected }) {
+function PokemonCard({ firebaseKey, values, type, img, name, id, isActive, minimize, className, isSelected, setSelected }) {
 
     const onSelectPokemon = () => {
-        setSelected && setSelected( id );
+        setSelected && setSelected([
+            firebaseKey,
+            {
+                id,
+                name,
+                img,
+                type,
+                values,
+            }
+        ]);
     }
 
     return (

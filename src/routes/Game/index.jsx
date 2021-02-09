@@ -8,30 +8,32 @@ import { useState } from 'react';
 const GamePage = () => {
 
     const match = useRouteMatch();
-    const [ selectedPokemons, setSelectedPokemons ] = useState({ pokemon: [] });
+    const [ selectedPokemons, setSelectedPokemons ] = useState([]);
 
-    const handleSelectedPokemons = ( id ) => {
+    const handleSelectedPokemons = ( selectedPokemon ) => {
         setSelectedPokemons( prevState => {
-            const selectedPokemonsObj    = { ...prevState };
-            const selectedPokemons = [ ...selectedPokemonsObj.pokemon ];
-            const indexOf = selectedPokemons.indexOf( id )
 
-            if( indexOf === -1 ) {
-                selectedPokemons.push( id );
-            } else {
-                selectedPokemons.splice( indexOf, 1 );
+            let isPush = true;
+            let newSelectedPokemons = [ ...prevState ].filter( item => {
+                if( item[0] === selectedPokemon[0] ) {
+                    isPush = false;
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+
+            if( isPush ) {
+                newSelectedPokemons.push( selectedPokemon );
             }
 
-            return {
-                ...prevState,
-                pokemon: selectedPokemons
-            };
+            return newSelectedPokemons;
         });
     }
 
     return (
         <PokemonContext.Provider value={{
-            selectedPokemons,
+            pokemon: selectedPokemons,
             onSelectedPokemons: handleSelectedPokemons
             }}>
             <Switch>

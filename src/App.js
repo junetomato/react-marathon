@@ -13,15 +13,19 @@ import './App.css';
 function App() {
 
     const match = useRouteMatch( '/' );
+    const matchBoardPage = useRouteMatch( '/game/board' );
+    const matchResult = match.isExact || matchBoardPage ? true : false;
+
+    console.log(matchBoardPage);
 
     return (
         <Switch>
             <Route path='/404' component={ NotFound } />
             <Route>
                 <>
-                    <MenuNavbar bgActive={ !match.isExact } />
+                    <MenuNavbar bgActive={ !matchResult } />
                     <div className={ cn( s.wrap, {
-                        [ s.isHomePage ]: match.isExact
+                        [ s.isHomePage ]: matchResult
                         } ) }>
                         <Switch>
                             <Route path='/' exact component={ HomePage } />

@@ -1,8 +1,9 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import PokemonCard from '../../../../components/PokemonCard';
 import { useState, useEffect, useContext } from 'react';
 import database from '../../../../services/firebase';
 import { PokemonContext } from '../../../../context/pokemonContext';
+import s from './style.module.css';
 
 function GamePage() {
 
@@ -20,11 +21,11 @@ function GamePage() {
         history.push( '/' );
     }
 
-    const handleSetSelectedPokemons = ( id ) => {
+    const handleSetSelectedPokemons = ( selectedPokemon ) => {
         setPokemons( prevState => {
             return Object.entries( prevState ).reduce( ( acc, item ) => {
                 const pokemon = { ...item[1] };
-                if( pokemon.id === id ) {
+                if( pokemon.id === selectedPokemon[1].id ) {
                     pokemon.isSelected = pokemon.isSelected ? false : true;
                 };
 
@@ -33,12 +34,7 @@ function GamePage() {
                 return acc;
             }, {});
         });
-        selectedPokemonsContext.onSelectedPokemons( id );
-    }
-
-    const handleAddNewPokemon = ( newPokemonData ) => {
-        const newKey = database.ref().child( 'pokemons' ).push().key;
-        database.ref( 'pokemons/' + newKey ).set({ ...newPokemonData });
+        selectedPokemonsContext.onSelectedPokemons( selectedPokemon );
     }
 
     return (
@@ -47,14 +43,15 @@ function GamePage() {
             <button onClick={ handleClick }>
                 Go Back to Home Page
             </button>
-            <div>
-                <button onClick={ handleAddNewPokemon }>Add New Pokemon</button>
+            <div className={ s.startGameLink }>
+                <Link to='/game/board'>Start Game</Link>
             </div>
             <div className="flex">
                 {
                     Object.entries( pokemons ).map( ([ key, { id, values, type, img, name, active, isSelected } ]) =>
                         <PokemonCard
                             key={ key }
+                            firebaseKey={ key }
                             values={ values }
                             type={ type }
                             img={ img }
