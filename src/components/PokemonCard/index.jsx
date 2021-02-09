@@ -1,23 +1,25 @@
 import cn from 'classnames';
 import s from './style.module.css';
 
-function PokemonCard({ firebaseKey, values, type, img, name, id, isActive, minimize, className, isSelected, setSelected }) {
+function PokemonCard({
+    values,
+    type,
+    img,
+    name,
+    id,
+    isActive,
+    minimize,
+    className,
+    isSelected,
+    onSetSelected
+    }) {
 
-    const onSelectPokemon = () => {
-        setSelected && setSelected([
-            firebaseKey,
-            {
-                id,
-                name,
-                img,
-                type,
-                values,
-            }
-        ]);
+    const handleSetSelected = () => {
+        onSetSelected && onSetSelected( id );
     }
 
     return (
-        <div className={cn(className, s.pokemonCard, { [s.active]: isActive, [s.selected]: isSelected })} onClick={ onSelectPokemon }>
+        <div className={cn(className, s.pokemonCard, { [s.active]: isActive, [s.selected]: isSelected })} onClick={ handleSetSelected }>
             <div className={s.cardFront}>
                 <div className={cn(s.wrap, s.front)}>
                     <div className={cn(s.pokemon, s[type])}>

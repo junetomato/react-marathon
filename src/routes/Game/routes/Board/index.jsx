@@ -5,13 +5,13 @@ import PokemonCard from '../../../../components/PokemonCard'
 
 const BoardPage = () => {
 
-    const selectedPokemonsContext = useContext( PokemonContext );
+    const pokemonsContext = useContext( PokemonContext );
 
     return (
         <div className={s.root}>
             <div className={s.playerOne}>
                 {
-                    selectedPokemonsContext.pokemon.map(
+                    pokemonsContext.pokemon.map(
                         ([ key, { id, name, img, type, values } ]) =>
                             <PokemonCard
                                 key={ key }

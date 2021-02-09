@@ -3,38 +3,56 @@ import StartPage from './routes/Start';
 import BoardPage from './routes/Board';
 import FinishPage from './routes/Finish';
 import { PokemonContext } from '../../context/pokemonContext';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react'
+import { FireBaseContext } from '../../context/firebaseContext'
 
 const GamePage = () => {
 
     const match = useRouteMatch();
+    const firebase = useContext( FireBaseContext );
     const [ selectedPokemons, setSelectedPokemons ] = useState([]);
+    const [ pokemons, setPokemons ] = useState({});
 
-    const handleSelectedPokemons = ( selectedPokemon ) => {
+    window.pokemons = pokemons;
+    window.selectedPokemons = selectedPokemons;
+
+    useEffect( () => {
+        firebase.getPokemonSocket( ( pokemons ) => {
+            setPokemons( pokemons );
+        })
+    }, [ firebase ] );
+
+    const handleSelectedPokemons = ( id ) => {
+
         setSelectedPokemons( prevState => {
+            return [];
+        })
 
-            let isPush = true;
-            let newSelectedPokemons = [ ...prevState ].filter( item => {
-                if( item[0] === selectedPokemon[0] ) {
-                    isPush = false;
-                    return false;
-                } else {
-                    return true;
+        setPokemons( prevState => {
+            return Object.entries( prevState ).reduce( ( acc, item ) => {
+                const pokemon = { ...item[1] };
+                if( pokemon.id === id ) {
+                    pokemon.isSelected = pokemon.isSelected ? false : true;
+                };
+
+                acc[item[0]] = pokemon;
+
+                if( pokemon.isSelected ) {
+                    setSelectedPokemons( prevState => {
+                        return [ ...prevState, [ item[0], pokemon ] ];
+                    })
                 }
-            });
 
-            if( isPush ) {
-                newSelectedPokemons.push( selectedPokemon );
-            }
-
-            return newSelectedPokemons;
+                return acc;
+            }, {});
         });
     }
 
     return (
         <PokemonContext.Provider value={{
             pokemon: selectedPokemons,
-            onSelectedPokemons: handleSelectedPokemons
+            onSetSelected: handleSelectedPokemons,
+            allPokemons: pokemons
             }}>
             <Switch>
                 <Route path={ `${ match.path }/` } exact component={ StartPage } />
