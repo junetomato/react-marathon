@@ -13,9 +13,6 @@ const GamePage = () => {
     const [ selectedPokemons, setSelectedPokemons ] = useState([]);
     const [ pokemons, setPokemons ] = useState({});
 
-    window.pokemons = pokemons;
-    window.selectedPokemons = selectedPokemons;
-
     useEffect( () => {
         firebase.getPokemonSocket( ( pokemons ) => {
             setPokemons( pokemons );
@@ -32,7 +29,7 @@ const GamePage = () => {
             return Object.entries( prevState ).reduce( ( acc, item ) => {
                 const pokemon = { ...item[1] };
                 if( pokemon.id === id ) {
-                    pokemon.isSelected = pokemon.isSelected ? false : true;
+                    pokemon.isSelected = !pokemon.isSelected;
                 };
 
                 acc[item[0]] = pokemon;
