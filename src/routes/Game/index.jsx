@@ -10,45 +10,53 @@ const GamePage = () => {
 
     const match = useRouteMatch();
     const firebase = useContext( FireBaseContext );
-    const [ selectedPokemons, setSelectedPokemons ] = useState([]);
+    const [ selectedPokemons, setSelectedPokemons ] = useState({});
     const [ pokemons, setPokemons ] = useState({});
 
     useEffect( () => {
         firebase.getPokemonSocket( ( pokemons ) => {
             setPokemons( pokemons );
         })
+
+        return () => firebase.offPokemonSocket();
     }, [ firebase ] );
 
-    const handleSelectedPokemons = ( id ) => {
+    const handleSelectedPokemons = ( key ) => {
 
+        const pokemon = { ...pokemons[ key ] };
         setSelectedPokemons( prevState => {
-            return [];
-        })
 
-        setPokemons( prevState => {
-            return Object.entries( prevState ).reduce( ( acc, item ) => {
-                const pokemon = { ...item[1] };
-                if( pokemon.id === id ) {
-                    pokemon.isSelected = !pokemon.isSelected;
-                };
+            if( prevState[ key ] ) {
+                const copyState = { ...prevState };
+                delete copyState[ key ];
 
-                acc[item[0]] = pokemon;
+                return copyState;
+            }
 
-                if( pokemon.isSelected ) {
-                    setSelectedPokemons( prevState => {
-                        return [ ...prevState, [ item[0], pokemon ] ];
-                    })
-                }
-
-                return acc;
-            }, {});
+            return {
+                ...prevState,
+                [ key ]: pokemon
+            }
         });
+
+        setPokemons( prevState => ({
+            ...prevState,
+            [ key ]: {
+                ...prevState[ key ],
+                selected: !prevState[ key ].selected
+            }
+        }));
+    }
+
+    const handleClearSelected = () => {
+        setSelectedPokemons({});
     }
 
     return (
         <PokemonContext.Provider value={{
-            pokemon: selectedPokemons,
+            pokemons: selectedPokemons,
             onSetSelected: handleSelectedPokemons,
+            onClearSelected: handleClearSelected,
             allPokemons: pokemons
             }}>
             <Switch>

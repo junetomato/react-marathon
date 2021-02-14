@@ -11,10 +11,10 @@ const firebaseConfig = {
     appId: "1:946312842159:web:6fac974b022fac16f3bd5a"
 };
 
+firebase.initializeApp( firebaseConfig );
+
 class Firebase {
     constructor() {
-        !firebase.apps.length && firebase.initializeApp(firebaseConfig);
-
         this.fire = firebase;
         this.database = this.fire.database();
     }
@@ -23,6 +23,10 @@ class Firebase {
         this.database.ref( 'pokemons' ).on( 'value', ( snapshot ) => {
             cb( snapshot.val() );
         })
+    }
+
+    offPokemonSocket = () => {
+        this.database.ref( 'pokemons' ).off();
     }
 
     getPokemonsOnce = async () => {
