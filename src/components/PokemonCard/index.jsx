@@ -15,7 +15,7 @@ function PokemonCard({
     }) {
 
     const handleSetSelected = () => {
-        onSetSelected && onSetSelected( id );
+        onSetSelected && onSetSelected();
     }
 
     return (

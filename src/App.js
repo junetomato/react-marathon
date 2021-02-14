@@ -1,6 +1,6 @@
 import HomePage from './routes/Home';
 import GamePage from './routes/Game';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import MenuNavbar from './components/MenuNavbar';
 import Footer from './components/Footer';
 import cn from 'classnames';
@@ -14,9 +14,8 @@ import Firebase from './services/firebase';
 
 function App() {
 
-    const match = useRouteMatch( '/' );
-    const matchBoardPage = useRouteMatch( '/game/board' );
-    const matchResult = match.isExact || matchBoardPage ? true : false;
+    const location = useLocation();
+    const isPadding = location.pathname === '/' || location.pathname === '/game/board';
 
     return (
         <FireBaseContext.Provider value={ new Firebase() }>
@@ -24,9 +23,9 @@ function App() {
                 <Route path='/404' component={ NotFound } />
                 <Route>
                     <>
-                        <MenuNavbar bgActive={ !matchResult } />
+                        <MenuNavbar bgActive={ !isPadding } />
                         <div className={ cn( s.wrap, {
-                            [ s.isHomePage ]: matchResult
+                            [ s.isHomePage ]: isPadding
                             } ) }>
                             <Switch>
                                 <Route path='/' exact component={ HomePage } />

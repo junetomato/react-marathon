@@ -1,16 +1,20 @@
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PokemonCard from '../../../../components/PokemonCard';
 import { useContext } from 'react';
 import { PokemonContext } from '../../../../context/pokemonContext';
 import s from './style.module.css';
 
-function GamePage() {
+function StartPage() {
 
     const history = useHistory();
-    const pokemonsContext = useContext( PokemonContext );
+    const pokemonContext = useContext( PokemonContext );
 
     const handleClick = () => {
         history.push( '/' );
+    }
+
+    const handleStartGameClick = () => {
+        history.push( '/game/board' );
     }
 
     return (
@@ -20,11 +24,16 @@ function GamePage() {
                 Go Back to Home Page
             </button>
             <div className={ s.startGameLink }>
-                <Link to='/game/board'>Start Game</Link>
+                <button
+                    onClick={ handleStartGameClick }
+                    disabled={ Object.keys( pokemonContext.pokemons ).length < 5 }
+                    >
+                    Start Game
+                </button>
             </div>
             <div className="flex">
                 {
-                    Object.entries( pokemonsContext.allPokemons ).map( ([ key, { id, values, type, img, name, active, isSelected } ]) =>
+                    Object.entries( pokemonContext.allPokemons ).map( ([ key, { id, values, type, img, name, selected } ]) =>
                         <PokemonCard
                             key={ key }
                             firebaseKey={ key }
@@ -33,9 +42,14 @@ function GamePage() {
                             img={ img }
                             name={ name }
                             id={ id }
-                            isActive={ true }
-                            isSelected={ isSelected }
-                            onSetSelected={ pokemonsContext.onSetSelected }
+                            isActive
+                            isSelected={ selected }
+                            onSetSelected={ () => {
+                                if( Object.keys( pokemonContext.pokemons ).length < 5 || selected ) {
+                                    pokemonContext.onSetSelected( key )
+                                }
+                            }}
+                            className={ s.card }
                             />
                     )
                 }
@@ -44,4 +58,4 @@ function GamePage() {
     );
 }
 
-export default GamePage;
+export default StartPage;

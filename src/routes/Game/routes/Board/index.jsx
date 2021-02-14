@@ -1,29 +1,34 @@
 import s from './style.module.css';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react'
 import { PokemonContext } from '../../../../context/pokemonContext';
 import PokemonCard from '../../../../components/PokemonCard'
 
 const BoardPage = () => {
 
-    const pokemonsContext = useContext( PokemonContext );
+    const { pokemons, onClearSelected } = useContext( PokemonContext );
+
+    useEffect( () => {
+        return () => onClearSelected();
+    }, [] ); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className={s.root}>
             <div className={s.playerOne}>
                 {
-                    pokemonsContext.pokemon.map(
-                        ([ key, { id, name, img, type, values } ]) =>
+                    Object.values( pokemons ).map(
+                        ({ id, name, img, type, values }) => (
                             <PokemonCard
-                                key={ key }
+                                key={ id }
                                 id={ id }
                                 name={ name }
                                 img={ img }
                                 type={ type }
                                 values={ values }
-                                isActive={ true }
+                                isActive
                                 minimize
                                 className={ s.card }
-                                />
+                            />
+                        )
                     )
                 }
             </div>
