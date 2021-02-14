@@ -10,8 +10,12 @@ const GamePage = () => {
 
     const match = useRouteMatch();
     const firebase = useContext( FireBaseContext );
+
     const [ selectedPokemons, setSelectedPokemons ] = useState({});
     const [ pokemons, setPokemons ] = useState({});
+    const [ player1, setPlayer1 ] = useState([]);
+    const [ player2, setPlayer2 ] = useState([]);
+    const [ isPlayer1Won, setPlayer1Won ] = useState( false );
 
     useEffect( () => {
         firebase.getPokemonSocket( ( pokemons ) => {
@@ -52,12 +56,30 @@ const GamePage = () => {
         setSelectedPokemons({});
     }
 
+    const handleSetPlayer1 = ( data ) => {
+        setPlayer1( data );
+    }
+
+    const handleSetPlayer2 = ( data ) => {
+        setPlayer2( data );
+    }
+
+    const handleSetPlayer1Win = () => {
+        setPlayer1Won( true );
+    }
+
     return (
         <PokemonContext.Provider value={{
             pokemons: selectedPokemons,
             onSetSelected: handleSelectedPokemons,
             onClearSelected: handleClearSelected,
-            allPokemons: pokemons
+            allPokemons: pokemons,
+            player1Finish: player1,
+            player2Finish: player2,
+            onSetPlayer1Finish: handleSetPlayer1,
+            onSetPlayer2Finish: handleSetPlayer2,
+            isPlayer1WonFinish: isPlayer1Won,
+            onSetPlayer1Win: handleSetPlayer1Win
             }}>
             <Switch>
                 <Route path={ `${ match.path }/` } exact component={ StartPage } />

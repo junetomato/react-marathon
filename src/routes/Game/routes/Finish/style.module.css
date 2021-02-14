@@ -1,0 +1,23 @@
+.wrapper {
+    text-align: center;
+}
+
+.cardBoard {
+    display: inline-block;
+    width: 250px;
+    height: 350px;
+}
+
+.cardBoard:not( :last-child ) {
+    margin-right: 20px;
+}
+
+.cardBoard.selected {
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+.endBtn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
