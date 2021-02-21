@@ -1,5 +1,5 @@
 .flex {
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto;
     grid-gap: 40px;
 }
