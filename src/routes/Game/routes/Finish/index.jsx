@@ -21,7 +21,7 @@ function FinishPage() {
 
     const handleClick = () => {
         if( choiceCard !== null ) {
-            firebase.addPokemon( choiceCard, () => console.log( 'new pokemon added' ) );
+            firebase.addPokemon( choiceCard, () => {} );
         }
         onClearSelected();
         history.replace( '/game' );

@@ -3,13 +3,18 @@ import StartPage from './routes/Start';
 import BoardPage from './routes/Board';
 import FinishPage from './routes/Finish';
 import { PokemonContext } from '../../context/pokemonContext';
-import { useState, useContext, useEffect } from 'react'
-import { FireBaseContext } from '../../context/firebaseContext'
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPokemonsAsync, selectPokemonsData } from '../../store/pokemons';
 
 const GamePage = () => {
 
     const match = useRouteMatch();
-    const firebase = useContext( FireBaseContext );
+    const dispatch = useDispatch();
+
+    const pokemonsRedux = useSelector( selectPokemonsData );
+
+    // const isLoading = useSelector( selectPokemonsLoading );
 
     const [ selectedPokemons, setSelectedPokemons ] = useState({});
     const [ pokemons, setPokemons ] = useState({});
@@ -18,12 +23,12 @@ const GamePage = () => {
     const [ isPlayer1Won, setPlayer1Won ] = useState( false );
 
     useEffect( () => {
-        firebase.getPokemonSocket( ( pokemons ) => {
-            setPokemons( pokemons );
-        })
+        dispatch( getPokemonsAsync() );
+    }, [] ); // eslint-disable-line react-hooks/exhaustive-deps
 
-        return () => firebase.offPokemonSocket();
-    }, [ firebase ] );
+    useEffect( () => {
+        setPokemons( pokemonsRedux );
+    }, [ pokemonsRedux ] );
 
     const handleSelectedPokemons = ( key ) => {
 

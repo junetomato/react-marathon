@@ -3,12 +3,13 @@ import cn from 'classnames';
 import { useHistory } from 'react-router-dom';
 
 
-function Header({ title, descr }) {
+function Header({ title, descr, onClickButton }) {
 
     const history = useHistory();
 
     const handleClick = () => {
         history.push( '/game' );
+        // onClickButton();
     }
 
     return (

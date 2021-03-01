@@ -39,24 +39,27 @@ const BoardPage = () => {
     const [ steps, setSteps ] = useState( 0 );
     const history = useHistory();
 
-    useEffect( async () => {
-        const boardResponse = await fetch( 'https://reactmarathon-api.netlify.app/api/board' );
-        const boardRequest = await boardResponse.json();
+    useEffect( () => {
+        async function fetchData() {
+            const boardResponse = await fetch( 'https://reactmarathon-api.netlify.app/api/board' );
+            const boardRequest = await boardResponse.json();
 
-        setBoard( boardRequest.data );
+            setBoard( boardRequest.data );
 
-        const player2Response = await fetch( 'https://reactmarathon-api.netlify.app/api/create-player' );
-        const player2Request = await player2Response.json();
+            const player2Response = await fetch( 'https://reactmarathon-api.netlify.app/api/create-player' );
+            const player2Request = await player2Response.json();
 
-        onSetPlayer2Finish( player2Request.data );
-        setPlayer2( () => {
-            return player2Request.data.map( item => ({
-                ...item,
-                possession: 'red'
-            }))
-        });
+            onSetPlayer2Finish( player2Request.data );
+            setPlayer2( () => {
+                return player2Request.data.map( item => ({
+                    ...item,
+                    possession: 'red'
+                }))
+            });
 
-        return () => onClearSelected();
+            return () => onClearSelected();
+        }
+        fetchData();
     }, [] ); // eslint-disable-line react-hooks/exhaustive-deps
 
     if( Object.keys( pokemons ).length === 0 ) {
