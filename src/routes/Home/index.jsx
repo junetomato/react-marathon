@@ -2,25 +2,13 @@ import Header from '../../components/Header';
 import Layout from '../../components/Layout';
 import bg1 from '../../assets/images/bg1.jpg';
 import bg3 from '../../assets/images/bg3.jpg';
-import { useDispatch, useSelector } from 'react-redux';
-import { plusAction, selectCount } from '../../store/counter'
 
 function HomePage() {
-
-    const count = useSelector( selectCount );
-    const dispatch = useDispatch();
-    console.log( '### count:', count );
-
-    const handleClickButton = () => {
-        dispatch( plusAction( 1 ) );
-    }
-
     return (
         <>
             <Header
                 title='This is title'
                 descr='This is Description!'
-                onClickButton={ handleClickButton }
             />
             <Layout
                 id='rules'

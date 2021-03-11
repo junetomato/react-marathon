@@ -1,9 +1,10 @@
 import s from './style.module.css';
-import { useContext, useEffect, useState } from 'react'
-import { PokemonContext } from '../../../../context/pokemonContext';
-import PokemonCard from '../../../../components/PokemonCard'
+import { useEffect, useState } from 'react';
+import PokemonCard from '../../../../components/PokemonCard';
 import { useHistory } from 'react-router-dom';
-import PlayerBoard from './components/PlayerBoard'
+import PlayerBoard from './components/PlayerBoard';
+import { useDispatch } from 'react-redux';
+import { setPlayer1Data, setPlayer1Won, setPlayer2Data } from '../../../../store/pokemonsFinish';
 
 const counterWin = ( board, player1, player2 ) => {
     let player1Count = player1.length;
@@ -22,49 +23,57 @@ const counterWin = ( board, player1, player2 ) => {
     return [ player1Count, player2Count ];
 }
 
-const BoardPage = () => {
+function BoardPage({ selectedPokemons, onClearSelected }) {
 
-    const { pokemons, onClearSelected, onSetPlayer1Finish, onSetPlayer2Finish, onSetPlayer1Win } = useContext( PokemonContext );
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    if( Object.keys( selectedPokemons ).length === 0 ) {
+        history.replace( '/game' );
+    }
 
     const [ board, setBoard ] = useState([]);
     const [ player1, setPlayer1 ] = useState( () => {
-        onSetPlayer1Finish( Object.values( pokemons ) );
-        return Object.values( pokemons ).map( item => ({
+        dispatch( setPlayer1Data( Object.values( selectedPokemons ) ) );
+
+        return Object.values( selectedPokemons ).map( item => ({
             ...item,
             possession: 'blue'
         }))
     });
+
     const [ player2, setPlayer2 ] = useState([]);
     const [ choiceCard, setChoiceCard ] = useState( null );
     const [ steps, setSteps ] = useState( 0 );
-    const history = useHistory();
 
     useEffect( () => {
+        let isUnsubscribe = false;
+
         async function fetchData() {
             const boardResponse = await fetch( 'https://reactmarathon-api.netlify.app/api/board' );
             const boardRequest = await boardResponse.json();
 
-            setBoard( boardRequest.data );
-
             const player2Response = await fetch( 'https://reactmarathon-api.netlify.app/api/create-player' );
             const player2Request = await player2Response.json();
 
-            onSetPlayer2Finish( player2Request.data );
-            setPlayer2( () => {
-                return player2Request.data.map( item => ({
-                    ...item,
-                    possession: 'red'
-                }))
-            });
-
-            return () => onClearSelected();
+            if( !isUnsubscribe ) {
+                setBoard( boardRequest.data );
+                dispatch( setPlayer2Data( player2Request.data ) );
+                setPlayer2( () => {
+                    return player2Request.data.map( item => ({
+                        ...item,
+                        possession: 'red'
+                    }))
+                });
+            }
         }
         fetchData();
-    }, [] ); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if( Object.keys( pokemons ).length === 0 ) {
-        history.replace( '/game' );
-    }
+        return () => {
+            onClearSelected();
+            isUnsubscribe = true;
+        }
+    }, [] ); // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleClickBoardPlate = async ( position ) => {
         if( choiceCard ) {
@@ -106,7 +115,7 @@ const BoardPage = () => {
 
             if( count1 > count2 ) {
                 alert( 'WIN' );
-                onSetPlayer1Win();
+                dispatch( setPlayer1Won() );
 
             } else if( count1 < count2 ) {
                 alert( 'LOSE' );
@@ -135,9 +144,7 @@ const BoardPage = () => {
                             className={s.boardPlate}
                             onClick={ () => !item.card && handleClickBoardPlate( item.position ) }
                             >
-                            {
-                                item.card && <PokemonCard { ...item.card } isActive minimize />
-                            }
+                            { item.card && <PokemonCard { ...item.card } isActive minimize /> }
                         </div>
                     ))
                 }
