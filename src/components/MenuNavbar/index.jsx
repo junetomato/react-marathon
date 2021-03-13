@@ -2,11 +2,12 @@ import Menu from './Menu';
 import NavBar from './NavBar';
 import { useState } from 'react';
 import Modal from '../Modal';
+import LoginForm from '../LoginForm';
 
 function MenuNavbar({ bgActive }) {
 
     const [ isActive, setActive ] = useState( null );
-    const [ isOpenModal, setOpenModal ] = useState( false );
+    const [ isOpenModal, setOpenModal ] = useState( true );
 
     const handleSetActive = () => {
         setActive( prevState => !prevState );
@@ -14,6 +15,10 @@ function MenuNavbar({ bgActive }) {
 
     const handleClickLogin = () => {
         setOpenModal( prevState => !prevState );
+    }
+
+    const handleSubmitLoginForm = ( values ) => {
+        console.log( '### values', values );
     }
 
     return (
@@ -33,7 +38,10 @@ function MenuNavbar({ bgActive }) {
                 title="Log In..."
                 onCloseModal={ handleClickLogin }
                 >
-                Some Text Here...
+                <LoginForm
+                    onSubmit={ handleSubmitLoginForm }
+                    isOpen={ isOpenModal }
+                    />
             </Modal>
         </>
     )
