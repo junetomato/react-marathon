@@ -40,6 +40,7 @@ function MenuNavbar({ bgActive }) {
         } else {
             localStorage.setItem( 'idToken', response.idToken );
             NotificationManager.success( 'Success message' );
+            handleClickLogin();
         }
     }
 

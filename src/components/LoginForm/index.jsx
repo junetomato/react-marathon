@@ -7,7 +7,7 @@ function LoginForm({ isOpen, onSubmit, signType, onSetSignType }) {
     const [ email, setEmail ] = useState( '' );
     const [ password, setPassword ] = useState( '' );
 
-    if( !isOpen && email.length > 0 && password.length > 0 ) {
+    if( !isOpen && ( email.length > 0 || password.length > 0 ) ) {
         setEmail( '' );
         setPassword( '' );
     }
@@ -21,10 +21,6 @@ function LoginForm({ isOpen, onSubmit, signType, onSetSignType }) {
         });
         setEmail( '' );
         setPassword( '' );
-    }
-
-    const handleSignToggle = ( e ) => {
-        onSetSignType( e );
     }
 
     return (
@@ -48,11 +44,12 @@ function LoginForm({ isOpen, onSubmit, signType, onSetSignType }) {
                 <button>
                     { signType === 'in' ? 'Signin' : 'Signup' }
                 </button>
-                <button
-                    onClick={ handleSignToggle }
+                <div
+                    onClick={ ( e ) => onSetSignType( e ) }
+                    className={ s.toggle }
                     >
                     { signType === 'in' ? 'Register?' : 'Login?' }
-                </button>
+                </div>
             </div>
         </form>
     )
