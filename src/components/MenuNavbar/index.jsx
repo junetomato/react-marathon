@@ -8,7 +8,7 @@ import { NotificationManager } from 'react-notifications';
 function MenuNavbar({ bgActive }) {
 
     const [ isActive, setActive ] = useState( null );
-    const [ isOpenModal, setOpenModal ] = useState( true );
+    const [ isOpenModal, setOpenModal ] = useState( false );
     const [ signType, setSignType ] = useState( 'in' );
 
     const handleSetActive = () => {
@@ -38,6 +38,7 @@ function MenuNavbar({ bgActive }) {
         if( response.hasOwnProperty( 'error' ) ) {
             NotificationManager.error( response.error.message, 'Wrong!' );
         } else {
+            localStorage.setItem( 'idToken', response.idToken );
             NotificationManager.success( 'Success message' );
         }
     }

@@ -34,3 +34,57 @@ a:hover,
 a:active {
     color: #f300b4;
 }
+
+button,
+button:visited {
+    font-size: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 240px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all ease-in-out .25s;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fafafa;
+    border: 1px solid #fafafa;
+}
+
+button,
+button:visited {
+    font-weight: bold;
+    color: #fafafa;
+    border: 1px solid transparent;
+    outline: none;
+    background: #f300b4;
+}
+
+button:hover {
+    transition: all ease-in-out 0s;
+    color: #f300b4;
+    border: 1px solid #f300b4;
+    outline: none;
+    background: transparent;
+}
+
+button:active {
+    padding: 1.05rem 1rem calc(.95rem - 1px) calc(1rem - 1px);
+    transition: all ease-in-out 0s;
+    color: #f300b4;
+    border: 1px solid #f300b4;
+    border-top: 2px solid;
+    border-right: 2px solid;
+    outline: none;
+    background: transparent;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: .4;
+}
+
+button:disabled:hover {
+    color: #fafafa;
+    border: 1px solid transparent;
+    background: #f300b4;
+}
