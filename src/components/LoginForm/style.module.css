@@ -1,0 +1,4 @@
+.buttonsWrap {
+    display: flex;
+    justify-content: space-between;
+}

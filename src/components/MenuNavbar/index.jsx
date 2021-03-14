@@ -3,11 +3,13 @@ import NavBar from './NavBar';
 import { useState } from 'react';
 import Modal from '../Modal';
 import LoginForm from '../LoginForm';
+import { NotificationManager } from 'react-notifications';
 
 function MenuNavbar({ bgActive }) {
 
     const [ isActive, setActive ] = useState( null );
     const [ isOpenModal, setOpenModal ] = useState( true );
+    const [ signType, setSignType ] = useState( 'in' );
 
     const handleSetActive = () => {
         setActive( prevState => !prevState );
@@ -17,8 +19,35 @@ function MenuNavbar({ bgActive }) {
         setOpenModal( prevState => !prevState );
     }
 
-    const handleSubmitLoginForm = ( values ) => {
-        console.log( '### values', values );
+    const handleSubmitLoginForm = async ({ email, password }) => {
+        const requestOptions = {
+            method: 'POST',
+            body: JSON.stringify({
+                email,
+                password,
+                returnSecureToken: true
+            })
+        }
+        const signTypeAPI = {
+            in: 'signInWithPassword',
+            up: 'signUp'
+        };
+
+        const response = await fetch( `https://identitytoolkit.googleapis.com/v1/accounts:${ signTypeAPI[ signType ] }?key=AIzaSyAHcD-tri0-Q17avJVe8qjbzxYKeK2Qswk`, requestOptions ).then( res => res.json() );
+
+        if( response.hasOwnProperty( 'error' ) ) {
+            NotificationManager.error( response.error.message, 'Wrong!' );
+        } else {
+            NotificationManager.success( 'Success message' );
+        }
+    }
+
+    const handleSignType = ( e ) => {
+        e.preventDefault();
+
+        setSignType( prevState => {
+            return prevState === 'in' ? 'up' : 'in';
+        });
     }
 
     return (
@@ -41,6 +70,8 @@ function MenuNavbar({ bgActive }) {
                 <LoginForm
                     onSubmit={ handleSubmitLoginForm }
                     isOpen={ isOpenModal }
+                    signType={ signType }
+                    onSetSignType={ handleSignType }
                     />
             </Modal>
         </>

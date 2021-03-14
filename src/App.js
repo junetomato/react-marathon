@@ -9,6 +9,8 @@ import AboutPage from './routes/About';
 import ContactPage from './routes/Contact';
 import NotFound from './routes/NotFound';
 import './App.css';
+import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 function App() {
 
@@ -16,27 +18,30 @@ function App() {
     const isPadding = location.pathname === '/' || location.pathname === '/game/board';
 
     return (
-        <Switch>
-            <Route path='/404' component={ NotFound } />
-            <Route>
-                <>
-                    <MenuNavbar bgActive={ !isPadding } />
-                    <div className={ cn( s.wrap, {
-                        [ s.isHomePage ]: isPadding
-                        } ) }>
-                        <Switch>
-                            <Route path='/' exact component={ HomePage } />
-                            <Route path='/home' component={ HomePage } />
-                            <Route path='/game' component={ GamePage } />
-                            <Route path='/about' component={ AboutPage } />
-                            <Route path='/contact' component={ ContactPage } />
-                            <Route render={ () => <Redirect to='/404' /> } />
-                        </Switch>
-                    </div>
-                    <Footer />
-                </>
-            </Route>
-        </Switch>
+        <>
+            <Switch>
+                <Route path='/404' component={ NotFound } />
+                <Route>
+                    <>
+                        <MenuNavbar bgActive={ !isPadding } />
+                        <div className={ cn( s.wrap, {
+                            [ s.isHomePage ]: isPadding
+                            } ) }>
+                            <Switch>
+                                <Route path='/' exact component={ HomePage } />
+                                <Route path='/home' component={ HomePage } />
+                                <Route path='/game' component={ GamePage } />
+                                <Route path='/about' component={ AboutPage } />
+                                <Route path='/contact' component={ ContactPage } />
+                                <Route render={ () => <Redirect to='/404' /> } />
+                            </Switch>
+                        </div>
+                        <Footer />
+                    </>
+                </Route>
+            </Switch>
+            <NotificationContainer />
+        </>
     )
 }
 

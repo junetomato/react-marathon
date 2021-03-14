@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Input from '../Input';
+import s from './style.module.css';
 
-function LoginForm({ isOpen, onSubmit }) {
+function LoginForm({ isOpen, onSubmit, signType, onSetSignType }) {
 
     const [ email, setEmail ] = useState( '' );
     const [ password, setPassword ] = useState( '' );
@@ -22,8 +23,9 @@ function LoginForm({ isOpen, onSubmit }) {
         setPassword( '' );
     }
 
-    console.log( '### email', email );
-    console.log( '### password', password );
+    const handleSignToggle = ( e ) => {
+        onSetSignType( e );
+    }
 
     return (
         <form onSubmit={ handleSubmit }>
@@ -42,9 +44,16 @@ function LoginForm({ isOpen, onSubmit }) {
                 required={ true }
                 onChange={ ( e ) => setPassword( e.target.value ) }
                 />
-            <button>
-                Login
-            </button>
+            <div className={ s.buttonsWrap }>
+                <button>
+                    { signType === 'in' ? 'Signin' : 'Signup' }
+                </button>
+                <button
+                    onClick={ handleSignToggle }
+                    >
+                    { signType === 'in' ? 'Register?' : 'Login?' }
+                </button>
+            </div>
         </form>
     )
 }
