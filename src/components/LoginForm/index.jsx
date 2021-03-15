@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'
 import Input from '../Input';
 import s from './style.module.css';
 
@@ -7,10 +7,10 @@ function LoginForm({ isOpen, onSubmit, signType, onSetSignType }) {
     const [ email, setEmail ] = useState( '' );
     const [ password, setPassword ] = useState( '' );
 
-    if( !isOpen && ( email.length > 0 || password.length > 0 ) ) {
+    useEffect(() => {
         setEmail( '' );
         setPassword( '' );
-    }
+    }, [ isOpen ] );
 
     const handleSubmit = ( e ) => {
         e.preventDefault();
@@ -19,8 +19,6 @@ function LoginForm({ isOpen, onSubmit, signType, onSetSignType }) {
             email,
             password
         });
-        setEmail( '' );
-        setPassword( '' );
     }
 
     return (
@@ -30,7 +28,7 @@ function LoginForm({ isOpen, onSubmit, signType, onSetSignType }) {
                 label="Email"
                 name="email"
                 required={ true }
-                onChange={ ( e ) => setEmail( e.target.value ) }
+                onInputChange={ setEmail }
                 />
             <Input
                 value={ password }
@@ -38,7 +36,7 @@ function LoginForm({ isOpen, onSubmit, signType, onSetSignType }) {
                 type="password"
                 name="password"
                 required={ true }
-                onChange={ ( e ) => setPassword( e.target.value ) }
+                onInputChange={ setPassword }
                 />
             <div className={ s.buttonsWrap }>
                 <button>

@@ -1,7 +1,7 @@
 import s from './style.module.css';
 import cn from 'classnames';
 
-function Input({ value, label, type = 'text', name, required, onChange }) {
+function Input({ value, label, type = 'text', name, required, onInputChange }) {
     return (
         <div className={ s.root }>
             <input
@@ -11,7 +11,7 @@ function Input({ value, label, type = 'text', name, required, onChange }) {
                 className={ cn( s.input, {
                     [ s.valid ]: value.length > 0
                 })}
-                onChange={ onChange }
+                onChange={ ( e ) => onInputChange( e.target.value ) }
                 required={ required }
                 />
             <span className={ s.highlight }></span>
