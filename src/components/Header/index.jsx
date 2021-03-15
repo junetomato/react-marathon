@@ -2,7 +2,6 @@ import s from './style.module.css';
 import cn from 'classnames';
 import { useHistory } from 'react-router-dom';
 
-
 function Header({ title, descr }) {
 
     const history = useHistory();

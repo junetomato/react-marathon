@@ -1,7 +1,8 @@
 import s from './style.module.css';
 import cn from 'classnames';
+import { ReactComponent as LoginSVG } from '../../../assets/images/login.svg';
 
-function NavBar({ isActive, onSetActive, bgActive = false }) {
+function NavBar({ isActive, onSetActive, bgActive = false, onClickLogin }) {
 
     const handleClick = () => {
         onSetActive && onSetActive();
@@ -13,11 +14,19 @@ function NavBar({ isActive, onSetActive, bgActive = false }) {
                 <p className={ cn( s.brand ) }>
                     LOGO
                 </p>
-                <div
-                    className={ cn( s.menuButton, { [s.active] : isActive } ) }
-                    onClick={ handleClick }
-                    >
-                    <span />
+                <div className={ s.loginAndMenu }>
+                    <div
+                        className={ s.loginWrap }
+                        onClick={ onClickLogin }
+                        >
+                        <LoginSVG />
+                    </div>
+                    <div
+                        className={ cn( s.menuButton, { [s.active] : isActive } ) }
+                        onClick={ handleClick }
+                        >
+                        <span />
+                    </div>
                 </div>
             </div>
         </nav>

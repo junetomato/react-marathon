@@ -2,8 +2,6 @@ import Header from '../../components/Header';
 import Layout from '../../components/Layout';
 import bg1 from '../../assets/images/bg1.jpg';
 import bg3 from '../../assets/images/bg3.jpg';
-// import s from './style.module.css';
-// import cn from 'classnames';
 
 function HomePage() {
     return (

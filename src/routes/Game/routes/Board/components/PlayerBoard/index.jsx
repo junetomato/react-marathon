@@ -12,6 +12,7 @@ function PlayerBoard({ player, cards, onClickCard }) {
             {
                 cards.map( item => (
                     <div
+                        key={ item.id }
                         className={ cn( s.cardBoard, {
                             [ s.selected ]: isSelected === item.id
                         })}
@@ -24,7 +25,6 @@ function PlayerBoard({ player, cards, onClickCard }) {
                         }}
                         >
                         <PokemonCard
-                            key={ item.id }
                             id={ item.id }
                             name={ item.name }
                             img={ item.img }
